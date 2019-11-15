@@ -46,13 +46,19 @@ void Game::playGame()
 
     while (programSelection)
     {
-        cout << "Each player must choose 5 characters for their team." << endl;
+        cout << endl
+             << "Each player must choose 5 characters for their team." << endl;
         // Prompt player 1 to pick his/her team
         pickTeams(1);
         // Prompt player 2 to pick his/her team
         pickTeams(2);
 
-        currentRound = 1;
+        do
+        {
+            runTournament();
+            currentRound++;
+
+        } while (currentRound <= 3);
 
         // do
         // {
@@ -76,6 +82,7 @@ void Game::playGame()
 
         programSelection = startMenu(TITLE);
     }
+    exit(0);
 }
 
 void Game::pickTeams(int player)
@@ -85,8 +92,8 @@ void Game::pickTeams(int player)
     for (int i = 0; i < TEAM_SIZE; i++)
     {
         int playerSelection = promptPlayerSelection(player);
-        string playerName = setPlayer(player1Characters, playerSelection);
-        cout << "Player " << (player == 1 ? "One" : "Two") << " has added " << playerName << " to their team!";
+        string playerName = (player == 1 ? (setPlayer(player1Characters, playerSelection)) : (setPlayer(player2Characters, playerSelection)));
+        cout << "Player " << (player == 1 ? "One" : "Two") << " has added " << playerName << " to their team!" << endl;
     }
 }
 
@@ -190,8 +197,8 @@ bool Game::allAlive()
  * Param: N/A
  * Return: N/A
  */
-
-/* void Game::fight()
+/*
+void Game::fight()
 {
     cout << "Player 1 is the attacker!" << endl;
     player1->printFightInfo(player2);
@@ -239,3 +246,34 @@ void Game::deallocateMem()
 }
 
 */
+
+void Game::runTournament()
+{
+    int currentRound = 1;
+    // Get Player 1's current character
+    CharacterNode *player1Front = player1Characters.getHead();
+    Character *player1Current = player1Front->character;
+    // Get Player 2's current character
+    CharacterNode *player2Front = player2Characters.getHead();
+    Character *player2Current = player2Front->character;
+
+    cout << "player 1's current character: " << player1Current->getName() << endl;
+    cout << "player 2's current character: " << player2Current->getName() << endl;
+
+    do
+    {
+        cout << "___________________________________________________________" << endl
+             << "Round " << currentRound << "!" << endl
+             << "Player 1 has " << player1Current->getStrength() << " strength points remaining." << endl
+             << "Player 2 has " << player2Current->getStrength() << " strength points remaining." << endl
+             << "__________________________________________________________" << endl
+             << endl;
+
+        cout << endl
+             << "Press enter continue." << endl;
+        cin.get();
+
+        currentRound++;
+
+    } while (currentRound <= 3);
+}

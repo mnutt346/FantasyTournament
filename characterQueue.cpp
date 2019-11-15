@@ -80,3 +80,13 @@ void CharacterQueue::addToEnd(Character *newCharacter)
         head->prevCharacter = newNode;
     }
 }
+
+CharacterNode *CharacterQueue::getHead()
+{
+    return head;
+}
+
+Character *CharacterQueue::getCharacterType()
+{
+    return head->character;
+}

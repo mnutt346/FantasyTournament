@@ -12,13 +12,13 @@
 struct CharacterNode
 {
 
-    Character *currentCharacter;
+    Character *character;
     CharacterNode *nextCharacter;
     CharacterNode *prevCharacter;
 
     CharacterNode(Character *&current, CharacterNode *next = nullptr, CharacterNode *prev = nullptr)
     {
-        currentCharacter = current;
+        character = current;
         nextCharacter = next;
         prevCharacter = prev;
     }
@@ -36,6 +36,8 @@ public:
     bool isEmpty();
     void addToEnd(Character *);
     void moveHeadToEnd();
+    CharacterNode *getHead();
+    Character *getCharacterType();
 };
 
 #endif
