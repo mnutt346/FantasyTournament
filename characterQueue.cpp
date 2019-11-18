@@ -126,4 +126,8 @@ Character *CharacterQueue::getCharacterType()
 
 void CharacterQueue::moveHeadToEnd()
 {
+    CharacterNode *newHead = head->nextCharacter;
+    CharacterNode *oldHead = head;
+    // Set new head to next node
+    head = newHead;
 }

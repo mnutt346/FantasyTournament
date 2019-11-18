@@ -233,6 +233,7 @@ void Game::fight(Character *player1, Character *player2)
         // Replenish Player 1 character's strength
         player1->restoreStrength();
         // Move Player 1's character to end of queue
+        player1Characters.moveHeadToEnd();
 
         cout << endl
              << "***** Player 2 has died! Player 1 wins! *****" << endl;
@@ -259,6 +260,8 @@ void Game::fight(Character *player1, Character *player2)
 
             // Replenish Player 2 character's strength
             player2->restoreStrength();
+            // Move Player 2's character to end of queue
+            player2Characters.moveHeadToEnd();
 
             cout << endl
                  << "***** Player 1 has died! Player 2 wins! *****" << endl;
