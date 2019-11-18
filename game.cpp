@@ -22,7 +22,6 @@ using std::vector;
  */
 Game::Game()
 {
-    int round = 1;
 }
 
 /* Summary: Driver for the game and provides an interface for the user
@@ -56,9 +55,8 @@ void Game::playGame()
         do
         {
             runTournament();
-            currentRound++;
 
-        } while (currentRound <= 3);
+        } while (allAlive());
 
         // do
         // {
@@ -185,7 +183,24 @@ string Game::setPlayer(CharacterQueue &playerCharacters, int playerSelection)
  */
 bool Game::allAlive()
 {
+    // If either player is out of characters:
     if (player1Characters.isEmpty() || player2Characters.isEmpty())
+    {
+        return false;
+    }
+
+    return true;
+}
+
+/* Summary: Determines whether each player's character is alive
+ * Param: Character *player1 => pointer to Player 1's current character
+ * Param: Character *player2 => pointer to Player 2's current character
+ * Return: Returns a boolean value representing whether both players' characters are alive
+ */
+bool Game::bothAlive(Character *&player1, Character *&player2)
+{
+    // If either player is dead:
+    if (player1->isDead() || player2->isDead())
     {
         return false;
     }
@@ -197,8 +212,8 @@ bool Game::allAlive()
  * Param: N/A
  * Return: N/A
  */
-/*
-void Game::fight()
+
+void Game::fight(Character *player1, Character *player2)
 {
     cout << "Player 1 is the attacker!" << endl;
     player1->printFightInfo(player2);
@@ -210,6 +225,10 @@ void Game::fight()
     // If player 2 died after the initial attack
     if (player2->isDead())
     {
+        // Add Player 2's current character to the losers queue
+        losers.addToEnd(player2);
+        // Remove Player 2's current character from the characters queue
+        player2Characters.removeHead();
         cout << endl
              << "***** Player 2 has died! Player 1 wins! *****" << endl;
     }
@@ -228,12 +247,16 @@ void Game::fight()
         // If player 1 dies
         if (player1->isDead())
         {
+            // Add Player 1's current character to the losers queue
+            losers.addToEnd(player1);
+            // Remove Player 1's current character from the characters queue
+            player1Characters.removeHead();
             cout << endl
                  << "***** Player 1 has died! Player 2 wins! *****" << endl;
         }
     }
 }
-*/
+
 /* Summary: Deallocates memory used by the two characters
  * Param: N/A
  * Return: N/A
@@ -257,8 +280,9 @@ void Game::runTournament()
     CharacterNode *player2Front = player2Characters.getHead();
     Character *player2Current = player2Front->character;
 
-    cout << "player 1's current character: " << player1Current->getName() << endl;
-    cout << "player 2's current character: " << player2Current->getName() << endl;
+    cout << endl
+         << "Player 1's current character: " << player1Current->getName() << endl;
+    cout << "Player 2's current character: " << player2Current->getName() << endl;
 
     do
     {
@@ -269,11 +293,13 @@ void Game::runTournament()
              << "__________________________________________________________" << endl
              << endl;
 
+        fight(player1Current, player2Current);
+
         cout << endl
              << "Press enter continue." << endl;
         cin.get();
 
         currentRound++;
 
-    } while (currentRound <= 3);
+    } while (bothAlive(player1Current, player2Current));
 }

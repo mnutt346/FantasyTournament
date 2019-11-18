@@ -13,16 +13,15 @@ private:
     CharacterQueue losers;
     int promptPlayerSelection(int);
     std::string setPlayer(CharacterQueue &, int);
-    int currentRound;
     void pickTeams(int);
     void runTournament();
+    void fight(Character *, Character *);
+    bool allAlive();
+    bool bothAlive(Character *&, Character *&);
 
 public:
     Game();
     void playGame();
-    bool allAlive();
-    void fight();
-    void driver();
     void deallocateMem();
 };
 

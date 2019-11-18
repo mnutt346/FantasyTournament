@@ -37,6 +37,7 @@ public:
     void addToEnd(Character *);
     void moveHeadToEnd();
     CharacterNode *getHead();
+    void removeHead();
     Character *getCharacterType();
 };
 
