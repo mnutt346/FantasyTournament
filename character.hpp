@@ -21,6 +21,7 @@ protected:
 
 public:
     Character(std::string, int, int);
+    ~Character();
     std::string getName();
     void setName();
     std::string getType();

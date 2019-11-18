@@ -32,6 +32,11 @@ Character::Character(string characterType, int arm, int stren)
     this->dead = false;
 }
 
+Character::~Character()
+{
+    delete this;
+}
+
 /* Summary: Gets the Character's name
  * Param: N/A
  * Return: Returns a string representing the Character's name

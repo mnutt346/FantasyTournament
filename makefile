@@ -13,8 +13,8 @@ CFLAGS = -std=c++11
 
 .PHONY: clean
 
-fantasyTournament: fantasyTournament.o menu.o inputValidation.o randomNum.o game.o character.o barbarian.o vampire.o blueMen.o medusa.o harryPotter.o
-	$(CXX) $(CFLAGS) -g fantasyTournament.o menu.o inputValidation.o randomNum.o game.o character.o barbarian.o vampire.o blueMen.o medusa.o harryPotter.o -o fantasyTournament
+fantasyTournament: fantasyTournament.o menu.o inputValidation.o randomNum.o game.o character.o characterQueue.o barbarian.o vampire.o blueMen.o medusa.o harryPotter.o
+	$(CXX) $(CFLAGS) -g fantasyTournament.o menu.o inputValidation.o randomNum.o game.o character.o characterQueue.o barbarian.o vampire.o blueMen.o medusa.o harryPotter.o -o fantasyTournament
 
 fantasyTournament.o: fantasyTournament.cpp
 	$(CXX) $(CFLAGS) -c fantasyTournament.cpp
@@ -33,6 +33,9 @@ game.o: game.cpp game.hpp
 
 character.o: character.cpp character.hpp
 	$(CXX) $(CFLAGS) -c character.cpp
+
+characterQueue.o: characterQueue.cpp characterQueue.hpp
+	$(CXX) $(CFLAGS) -c characterQueue.cpp
 
 barbarian.o: barbarian.cpp barbarian.hpp
 	$(CXX) $(CFLAGS) -c barbarian.cpp
