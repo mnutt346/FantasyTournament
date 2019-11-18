@@ -18,11 +18,16 @@ private:
     void fight(Character *, Character *);
     bool allAlive();
     bool bothAlive(Character *&, Character *&);
+    void clearTeams();
+    void deallocateMem();
+    int player1Score;
+    int player2Score;
+    void printScore();
+    void handleLosersSelection(int);
 
 public:
     Game();
     void playGame();
-    void deallocateMem();
 };
 
 #endif

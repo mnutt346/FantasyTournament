@@ -39,6 +39,7 @@ public:
     CharacterNode *getHead();
     void removeHead();
     Character *getCharacterType();
+    void printCharacters();
 };
 
 #endif

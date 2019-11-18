@@ -28,7 +28,7 @@ int HarryPotter::attack(Character *opponent, int playerNum)
 {
     int damage = this->rollAttack(2, 6);
 
-    cout << (playerNum == 1 ? "Player 1" : "Player 2") << " rolled an attack of " << damage << "!" << endl;
+    cout << this->getName() << " rolled an attack of " << damage << "!" << endl;
 
     return damage;
 }
@@ -45,18 +45,18 @@ void HarryPotter::defend(int damage, int playerNum)
 
     bool hogwartsActive = this->getHogwarts();
 
-    cout << (playerNum == 1 ? "Player 1" : "Player 2") << " rolled a defense of " << defense << "!" << endl;
+    cout << this->getName() << " rolled a defense of " << defense << "!" << endl;
 
     // If the defense roll is greater than the damage dealt
     if (defense >= damage)
     {
-        cout << "No damage was inflicted on " << (playerNum == 1 ? "Player 1" : "Player 2") << "." << endl;
+        cout << "No damage was inflicted on " << this->getName() << "." << endl;
     }
     else
     {
         int inflictedDamage = damage - defense;
 
-        cout << (playerNum == 1 ? "Player 1" : "Player 2") << " took damage of " << inflictedDamage << "!" << endl;
+        cout << this->getName() << " took damage of " << inflictedDamage << "!" << endl;
 
         // Reduce player's strength by the actual damage inflicted
         this->takeDamage(inflictedDamage);
@@ -65,13 +65,13 @@ void HarryPotter::defend(int damage, int playerNum)
         {
             this->setStrength(20);
 
-            cout << (playerNum == 1 ? "Player 1" : "Player 2") << " used Hogwarts!" << endl
-                 << (playerNum == 1 ? "Player 1" : "Player 2") << " has returned to fight again!" << endl;
+            cout << this->getName() << " used Hogwarts!" << endl
+                 << this->getName() << " has returned to fight again!" << endl;
 
             this->setHogwarts();
         }
 
-        cout << (playerNum == 1 ? "Player 1" : "Player 2") << "'s current strength is now " << this->getStrength() << "." << endl;
+        cout << this->getName() << "'s current strength is now " << this->getStrength() << "." << endl;
     }
 }
 

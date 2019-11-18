@@ -28,7 +28,7 @@ int BlueMen::attack(Character *opponent, int playerNum)
 {
     int damage = this->rollAttack(2, 10);
 
-    cout << (playerNum == 1 ? "Player 1" : "Player 2") << " rolled an attack of " << damage << "!" << endl;
+    cout << this->getName() << " rolled an attack of " << damage << "!" << endl;
 
     return damage;
 }
@@ -61,7 +61,7 @@ void BlueMen::defend(int damage, int playerNum)
         defense = this->rollDefense(1);
     }
 
-    cout << (playerNum == 1 ? "Player 1" : "Player 2") << " rolled a defense of " << defense << "!" << endl;
+    cout << this->getName() << " rolled a defense of " << defense << "!" << endl;
 
     // add the player's armor to the total defense score
     defense += this->getArmor();
@@ -69,17 +69,17 @@ void BlueMen::defend(int damage, int playerNum)
     // If the defense roll is greater than the damage dealt
     if (defense >= damage)
     {
-        cout << "No damage was inflicted on " << (playerNum == 1 ? "Player 1" : "Player 2") << "." << endl;
+        cout << "No damage was inflicted on " << this->getName() << "." << endl;
     }
     else
     {
         int inflictedDamage = damage - defense;
 
-        cout << (playerNum == 1 ? "Player 1" : "Player 2") << " took damage of " << inflictedDamage << "!" << endl;
+        cout << this->getName() << " took damage of " << inflictedDamage << "!" << endl;
 
         // Reduce player's strength by the actual damage inflicted
         this->takeDamage(inflictedDamage);
 
-        cout << (playerNum == 1 ? "Player 1" : "Player 2") << "'s current strength is now " << this->getStrength() << "." << endl;
+        cout << this->getName() << "'s current strength is now " << this->getStrength() << "." << endl;
     }
 }

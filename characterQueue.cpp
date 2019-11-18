@@ -4,7 +4,11 @@
 ** Date: 11/13/2019
 ** Description: Implementation file for the CharacterQueue class.
 **************************************************************************************/
+#include <iostream>
 #include "characterQueue.hpp"
+
+using std::cout;
+using std::endl;
 
 CharacterQueue::CharacterQueue()
 {
@@ -32,6 +36,7 @@ void CharacterQueue::deallocateMem()
 
             current->prevCharacter = nullptr;
             current->nextCharacter = nullptr;
+            delete current->character;
             delete current;
 
             current = temp;
@@ -40,6 +45,7 @@ void CharacterQueue::deallocateMem()
 
         head->nextCharacter = nullptr;
         head->nextCharacter = nullptr;
+        delete head->character;
         head = nullptr;
     }
 }
@@ -130,4 +136,28 @@ void CharacterQueue::moveHeadToEnd()
     CharacterNode *oldHead = head;
     // Set new head to next node
     head = newHead;
+}
+
+void CharacterQueue::printCharacters()
+{
+    cout << endl
+         << "Losing Characters:" << endl;
+    if (head->nextCharacter == head)
+    {
+        Character *currentCharacter = head->character;
+        cout << currentCharacter->getName() << endl;
+    }
+    else
+    {
+        CharacterNode *currentCharNode = head;
+
+        do
+        {
+            Character *currentCharacter = currentCharNode->character;
+            cout << currentCharacter->getName() << endl;
+
+            // Reset currentCharNode to the next node in the queue
+            currentCharNode = currentCharNode->nextCharacter;
+        } while (currentCharNode != head);
+    }
 }

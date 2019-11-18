@@ -22,6 +22,8 @@ using std::vector;
  */
 Game::Game()
 {
+    player1Score = 0;
+    player2Score = 0;
 }
 
 /* Summary: Driver for the game and provides an interface for the user
@@ -31,6 +33,7 @@ Game::Game()
 void Game::playGame()
 {
     const string TITLE = "Fantasy Combat Game";
+    vector<string> losingCharacterOptions = {"Yes", "No"};
 
     cout << endl
          << "----- Welcome to Fantasy Combat! -----" << endl;
@@ -39,7 +42,7 @@ void Game::playGame()
     if (!programSelection)
     {
         cout << "Exiting program..." << endl;
-        //deallocateMem();
+        deallocateMem();
         exit(0);
     }
 
@@ -58,28 +61,25 @@ void Game::playGame()
 
         } while (allAlive());
 
-        // do
-        // {
-        //     cout << "___________________________________________________________" << endl
-        //          << "Round " << currentRound << "!" << endl
-        //          << "Player 1 has " << player1->getStrength() << " strength points remaining." << endl
-        //          << "Player 2 has " << player2->getStrength() << " strength points remaining." << endl
-        //          << "__________________________________________________________" << endl
-        //          << endl;
+        // Print final score
+        printScore();
 
-        //     fight();
+        // Prompt user to view loosers queue
+        cout << endl
+             << "Would you like to view the losing characters?";
+        int viewLosersSelection = multiOptionMenu(losingCharacterOptions);
 
-        //     currentRound++;
+        handleLosersSelection(viewLosersSelection);
 
-        //     cout << endl
-        //          << "Press enter continue." << endl;
-        //     cin.get();
-        // } while (allAlive());
-
-        //deallocateMem();
+        // Clear all characters from both teams
+        clearTeams();
+        // Reset scores to 0
+        player1Score = 0;
+        player2Score = 0;
 
         programSelection = startMenu(TITLE);
     }
+    deallocateMem();
     exit(0);
 }
 
@@ -215,7 +215,7 @@ bool Game::bothAlive(Character *&player1, Character *&player2)
 
 void Game::fight(Character *player1, Character *player2)
 {
-    cout << "Player 1 is the attacker!" << endl;
+    cout << player1->getName() << " is the attacker!" << endl;
     player1->printFightInfo(player2);
     // Get player 1's attack damage
     int attack1Damage = player1->attack(player2, 1);
@@ -234,16 +234,18 @@ void Game::fight(Character *player1, Character *player2)
         player1->restoreStrength();
         // Move Player 1's character to end of queue
         player1Characters.moveHeadToEnd();
+        // Increase Player 1's score
+        player1Score++;
 
         cout << endl
-             << "***** Player 2 has died! Player 1 wins! *****" << endl;
+             << "***** " << player2->getName() << " has died! " << player1->getName() << " wins! *****" << endl;
     }
     // If player 2 is still alive
     else
     {
         // Player 2 is the attacker
         cout << endl
-             << "Player 2 is now the attacker!" << endl;
+             << player2->getName() << " is now the attacker!" << endl;
         player2->printFightInfo(player1);
         // Get player 2's attack damage
         int attack2Damage = player2->attack(player1, 2);
@@ -262,9 +264,11 @@ void Game::fight(Character *player1, Character *player2)
             player2->restoreStrength();
             // Move Player 2's character to end of queue
             player2Characters.moveHeadToEnd();
+            // Increase Player 2's score
+            player2Score++;
 
             cout << endl
-                 << "***** Player 1 has died! Player 2 wins! *****" << endl;
+                 << "***** " << player1->getName() << " has died! " << player2->getName() << " wins! *****" << endl;
         }
     }
 }
@@ -273,14 +277,12 @@ void Game::fight(Character *player1, Character *player2)
  * Param: N/A
  * Return: N/A
  */
-/*
+
 void Game::deallocateMem()
 {
-    delete player1;
-    delete player2;
+    player1Characters.deallocateMem();
+    player2Characters.deallocateMem();
 }
-
-*/
 
 void Game::runTournament()
 {
@@ -292,16 +294,14 @@ void Game::runTournament()
     CharacterNode *player2Front = player2Characters.getHead();
     Character *player2Current = player2Front->character;
 
-    cout << endl
-         << "Player 1's current character: " << player1Current->getName() << endl;
-    cout << "Player 2's current character: " << player2Current->getName() << endl;
-
     do
     {
         cout << "___________________________________________________________" << endl
              << "Round " << currentRound << "!" << endl
-             << "Player 1 has " << player1Current->getStrength() << " strength points remaining." << endl
-             << "Player 2 has " << player2Current->getStrength() << " strength points remaining." << endl
+             << "Player 1's current character: " << player1Current->getName() << endl
+             << "Player 2's current character: " << player2Current->getName() << endl
+             << player1Current->getName() << " has " << player1Current->getStrength() << " strength points remaining." << endl
+             << player1Current->getName() << " has " << player2Current->getStrength() << " strength points remaining." << endl
              << "__________________________________________________________" << endl
              << endl;
 
@@ -314,4 +314,51 @@ void Game::runTournament()
         currentRound++;
 
     } while (bothAlive(player1Current, player2Current));
+}
+
+void Game::clearTeams()
+{
+    while (player1Characters.getHead() != nullptr)
+    {
+        player1Characters.removeHead();
+    }
+
+    while (player2Characters.getHead() != nullptr)
+    {
+        player2Characters.removeHead();
+    }
+}
+
+void Game::printScore()
+{
+    int winner;
+    string winMessage;
+
+    if (player1Score > player2Score)
+    {
+        winMessage = "Player 1 wins the tournament!";
+    }
+    else if (player2Score > player1Score)
+    {
+        winMessage = "Player 2 wins the tournament!";
+    }
+    else
+    {
+        winMessage = "It's a draw!";
+    }
+
+    cout << endl
+         << "*** Final Score: ***" << endl
+         << "Player 1: " << player1Score << endl
+         << "Player 2: " << player2Score << endl
+         << winMessage << endl;
+}
+
+void Game::handleLosersSelection(int selection)
+{
+    if (selection == 1)
+    {
+        losers.printCharacters();
+    }
+    return;
 }
