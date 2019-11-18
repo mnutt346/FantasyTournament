@@ -123,3 +123,7 @@ Character *CharacterQueue::getCharacterType()
 {
     return head->character;
 }
+
+void CharacterQueue::moveHeadToEnd()
+{
+}

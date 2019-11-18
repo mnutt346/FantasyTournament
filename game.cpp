@@ -229,6 +229,11 @@ void Game::fight(Character *player1, Character *player2)
         losers.addToEnd(player2);
         // Remove Player 2's current character from the characters queue
         player2Characters.removeHead();
+
+        // Replenish Player 1 character's strength
+        player1->restoreStrength();
+        // Move Player 1's character to end of queue
+
         cout << endl
              << "***** Player 2 has died! Player 1 wins! *****" << endl;
     }
@@ -251,6 +256,10 @@ void Game::fight(Character *player1, Character *player2)
             losers.addToEnd(player1);
             // Remove Player 1's current character from the characters queue
             player1Characters.removeHead();
+
+            // Replenish Player 2 character's strength
+            player2->restoreStrength();
+
             cout << endl
                  << "***** Player 1 has died! Player 2 wins! *****" << endl;
         }

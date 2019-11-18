@@ -12,6 +12,7 @@
 class Character
 {
 protected:
+    int maxStrength;
     std::string name;
     std::string type;
     int armor;
@@ -33,6 +34,7 @@ public:
     int rollDefense(int);
     bool isDead();
     void printFightInfo(Character *);
+    void restoreStrength();
 };
 
 #endif

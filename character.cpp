@@ -6,6 +6,7 @@
 **************************************************************************************/
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "character.hpp"
 #include "randomNum.hpp"
 #include "inputValidation.hpp"
@@ -13,6 +14,7 @@
 using std::cin;
 using std::cout;
 using std::endl;
+using std::floor;
 using std::string;
 
 /* Summary: Constructor for the Character class. Initializes the type, armor, and strength.
@@ -23,6 +25,7 @@ using std::string;
  */
 Character::Character(string characterType, int arm, int stren)
 {
+    this->maxStrength = stren;
     this->type = characterType;
     this->armor = arm;
     this->strength = stren;
@@ -157,4 +160,19 @@ void Character::printFightInfo(Character *opponent)
 {
     cout << "Attacker Type: " << this->getType() << endl
          << "Defender Type: " << opponent->getType() << ", Armor: " << opponent->getArmor() << ", Strength: " << opponent->getStrength() << endl;
+}
+
+/* Summary: Restores 50% of the strength lost by the character in combat
+ * Param: N/A
+ * Return: N/A
+ */
+void Character::restoreStrength()
+{
+    const double RESTORE_PERCENT = 0.5;
+
+    int damageTaken = maxStrength - strength;
+
+    int strengthReturned = floor(damageTaken * RESTORE_PERCENT);
+
+    this->setStrength((strength + strengthReturned));
 }
