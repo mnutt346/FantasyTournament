@@ -13,6 +13,7 @@ using std::endl;
 CharacterQueue::CharacterQueue()
 {
     head = nullptr;
+    size = 0;
 }
 
 CharacterQueue::~CharacterQueue()
@@ -52,7 +53,7 @@ void CharacterQueue::deallocateMem()
 
 bool CharacterQueue::isEmpty()
 {
-    if (this->head == nullptr)
+    if (size == 0)
     {
         return true;
     }
@@ -85,6 +86,8 @@ void CharacterQueue::addToEnd(Character *newCharacter)
         // Set the head's prev value to the new character node
         head->prevCharacter = newNode;
     }
+
+    size++;
 }
 
 CharacterNode *CharacterQueue::getHead()
@@ -122,6 +125,8 @@ void CharacterQueue::removeHead()
             oldHead->nextCharacter = nullptr;
             oldHead->prevCharacter = nullptr;
         }
+
+        size--;
     }
 }
 

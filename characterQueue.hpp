@@ -28,6 +28,7 @@ class CharacterQueue
 {
 private:
     CharacterNode *head;
+    int size;
 
 public:
     CharacterQueue();
